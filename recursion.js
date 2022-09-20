@@ -8,6 +8,8 @@ function product(nums) {
   return nums[0] * product(nums.slice(1));
 }
 
+// function product(nums, )
+
 /** longest: return the length of the longest word in an array of words. */
 
 function longest(words) {
@@ -40,6 +42,7 @@ function everyOther(str) {
 function find(arr, val) {
   if (arr.length === 0) return false;
 
+  //if statement
   return arr[0] === val ? true : find(arr.slice(1), val);
 
 }
@@ -48,7 +51,8 @@ function find(arr, val) {
 
 function isPalindrome(str) {
   if (str.length === 0) return true;
-
+  
+  //if statement
   return str[0] === str.slice(-1) ? isPalindrome(str.slice(1,-1)) : false
 
 }
@@ -64,17 +68,27 @@ function revString(str) {
 
 /** findIndex: return the index of val in arr (or -1 if val is not present). */
 
-function findIndex(arr, val) {
-  if (arr.length === 0) return -1;
+function findIndex(arr, val, i = 0) {
+  if (arr.length === i) return -1;
 
-  return arr.at(-1) === val ? arr.length - 1 : findIndex(arr.splice(0, arr.length-1), val);
-
+  //if statement
+  return arr[i] === val ? i : findIndex(arr, val, i+1);
 }
 
 /** gatherStrings: given an object, return an array of all of the string values. */
 
-function gatherStrings(obj) {
-
+function gatherStrings(obj, out = []) {
+  for (let key in obj) {
+    if (typeof obj[key] === "object") {
+      gatherStrings(obj[key], out);
+    } else {
+      if (typeof obj[key] === "string"){ 
+        out.push(obj[key]);
+      }
+    }
+  }
+  
+  return out;
 }
 
 // FURTHER STUDY
@@ -82,15 +96,41 @@ function gatherStrings(obj) {
 /** binarySearch: given a sorted array of numbers, and a value,
  * return true if val is in array, false if not present). */
 
-function binarySearch(arr, val) {
+function binarySearch(arr, val, left = 0, right = arr.length) {
+  if (left === right) return false;
+  
+  let halfway = Math.floor((left + right) / 2);
+  
+  if (arr[halfway] === val) {
+    return true;
+    //want left to be halfway + 1 and right to be end
+  } else if (arr[halfway] < val) {
+    return binarySearch(arr, val, halfway + 1, right);
+    //left to be start and right to be halfway
+  } else {
+    return binarySearch(arr, val, left, halfway);
+  }
 
 }
-
+//12345
+//45
+//4
 
 /** binarySearch: given a sorted array of numbers, and a value,
  * return the index of that value (or -1 if val is not present). */
 
-function binarySearchIndex(arr, val) {
+function binarySearchIndex(arr, val, left = 0, right = arr.length) {
+  if (left === right) return -1;
+  
+  let halfway = Math.floor((left + right) / 2);
+  
+  if (arr[halfway] === val) {
+    return halfway;
+  } else if (arr[halfway] < val) {
+    return binarySearchIndex(arr, val, halfway + 1, right);
+  } else {
+    return binarySearchIndex(arr, val, left, halfway);
+  }
 
 }
 
