@@ -30,3 +30,11 @@ function validate(square) {
 
   return false;
 }
+
+function simplify(square) {
+  //when square is number equals itself
+  //when square is all same number simplifies to just that number
+  //otherwise no change
+  
+  if (square === 0 || square === 1) return square;
+}
